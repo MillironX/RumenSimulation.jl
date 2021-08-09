@@ -8,9 +8,9 @@ C0 = 60 # g/L
 
 # Declare a struct to hold the final results
 struct RumenResults
-    C::Float64
-    k::Float64
-    τ::Float64
+    C
+    k
+    τ
 end # struct
 
 function cornell_model(BW, digestibility)
@@ -43,11 +43,11 @@ function cornell_model(BW, digestibility)
     k_calc = nlsolve(optimfun, k, ftol=1e-3, show_trace=true)
 
     # Resolve for the best concentrations
-    optimfun2(C) = cornell_inside_objective(C, k, τ)
+    optimfun2(c) = cornell_inside_objective(c, k_calc.zero, τ)
     C_calc = nlsolve(optimfun2, C, ftol=1e-3, show_trace=true)
 
     # Return the results
-    return RumenResults(C_calc, k_calc, τ)
+    return RumenResults(C_calc.zero, k_calc.zero, τ)
 
 
 end # function
@@ -70,7 +70,7 @@ end # function
 
 function cornell_outside_objective(C, k, τ, digestability)
     # Set up a one-parameter function to optimize
-    optimfun(C) = cornell_inside_objective(C, k, τ)
+    optimfun(c) = cornell_inside_objective(c, k, τ)
 
     # Find the exit concentrations of each compartment
     C_calc = nlsolve(optimfun, C, ftol=1e-3)
