@@ -1,7 +1,7 @@
 name = "RumenSimulation"
 uuid = "0bc3709f-ffa8-461e-ab45-2eba68f28c3a"
 authors = ["Thomas A. Christensen II <25492070+MillironX@users.noreply.github.com>"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 NLsolve = "2774e3e8-f4cf-5e23-947b-6d7e65073b56"
